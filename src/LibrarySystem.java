@@ -16,11 +16,17 @@ public class LibrarySystem {
         loanList = null;
     }
 
-
+    //TODO search a book method
     public void search() {
 
     }
 
+    //TODO borrow a book method
+    public void borrowBook(){
+
+    }
+
+    //TODO return a book method
     public void returnBook(Loan loanID) {
 
     }
