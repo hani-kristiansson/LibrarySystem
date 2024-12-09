@@ -23,10 +23,11 @@ public class LibraryInfo {
             switch (scanner.nextInt()) {
                 case 1:
                     System.out.println("Enter search term: ");
-                    String userInput = scanner.nextLine().trim();
-
-
-                    Book.searchBooks(bookList,userInput);
+                    Scanner scanner2 = new Scanner(System.in);
+                    String userInput = scanner2.nextLine().trim();
+                    if (userInput != null && !userInput.isEmpty()) {
+                        Book.searchBooks(Book.getBooks(),userInput);
+                    }
                     break;
 
                 case 2:
