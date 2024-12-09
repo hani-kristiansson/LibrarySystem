@@ -8,7 +8,7 @@ public class LibraryInfo {
     private String libraryLocation = "Tomtebodavägen 3A, 171 65 Solna";
     private String libraryTelephoneNumber = "08-466 60 00";
     private String LibraryOpenHours = "Mon-Fre 08-17";
-    private String welcomeMessage = "Welcome to " + libraryName + "!" + "Please select menu.";
+    private String welcomeMessage = "Welcome to " + libraryName + "!" + " Please select menu.";
 
     List<Book> bookList = new ArrayList<Book>();
 
@@ -23,12 +23,14 @@ public class LibraryInfo {
             switch (scanner.nextInt()) {
                 case 1:
                     System.out.println("Enter search term: ");
-                    String userInput = scanner.nextLine();
+                    String userInput = scanner.nextLine().trim();
 
+
+                    Book.searchBooks(bookList,userInput);
                     break;
 
                 case 2:
-                    //librarySystem.borrowBook();
+                    //librarySystem.loanBook();
                     break;
 
                 case 3:
