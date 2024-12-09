@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class LibraryInfo {
@@ -7,6 +9,8 @@ public class LibraryInfo {
     private String libraryTelephoneNumber = "08-466 60 00";
     private String LibraryOpenHours = "Mon-Fre 08-17";
     private String welcomeMessage = "Welcome to " + libraryName + "!" + "Please select menu.";
+
+    List<Book> bookList = new ArrayList<Book>();
 
     public LibraryInfo(LibrarySystem librarySystem) {
         System.out.println(welcomeMessage);
@@ -18,7 +22,9 @@ public class LibraryInfo {
         while (true) {
             switch (scanner.nextInt()) {
                 case 1:
-                    librarySystem.search();
+                    System.out.println("Enter search term: ");
+                    String userInput = scanner.nextLine();
+
                     break;
 
                 case 2:
