@@ -7,33 +7,69 @@ public class Loan {
     private LocalDate startDate;
     private LocalDate endDate;
     private String userName;
-    private String loanID;
+    protected String loanID;
 
     public Loan(String ISBN, String userName) {
         this.ISBN = ISBN;
         this.userName = userName;
+        this.loanID = ISBN + userName + LocalDate.now();
     }
+
+
 
     public LocalDate calculateDueDate(LocalDate localDate) {
         return localDate.plusDays(30);
     }
 
-    public void loanCreator (Member member, String ISBN, List<Book> bookList){
+    public void loanCreator(Member member, String ISBN, List<Book> bookList) {
+        Loan loan = new Loan(ISBN, member.getUserName());
+        String result = loan.loanBook(ISBN, bookList, member.getUserName());
+        if (result.startsWith("Loan created successfully!")) {
+            System.out.println(result);
+        } else {
+            System.out.println(result);
+        }
+    }
+
+
+    public String loanBook(String ISBN, List<Book> bookList, String userName) {
+        if(userName == null || userName.isEmpty()) {
+            return "invalid userName.";
+
+        }
+
         for (Book book : bookList) {
-            if (book.getISBN().equals(ISBN)) {
-                if (book.isAvailable(book)) {
-                    book.setQuantity(book.getQuantity() - 1);
-                    startDate = LocalDate.now();
-                    endDate = calculateDueDate(startDate);
-                    loanID = ISBN + member.getUserName() + member.getNumberOfLoans();
-                    System.out.println("The book has been loaned to " + userName + " with the loan ID: "
-                            + loanID + " and the due date is: " + endDate);
-                }
+            if (book.getISBN().trim().equals(ISBN.trim()) && book.isAvailable()) {
+                book.setQuantity(book.getQuantity() - 1); // Minska kvantiteten
+                this.loanID = ISBN + userName + LocalDate.now(); // Skapa ett unikt Loan ID
+                this.startDate = LocalDate.now();
+                this.endDate = calculateDueDate(startDate);
+                return "Loan created successfully! Loan ID: " + this.loanID + ", Due Date: " + this.endDate;
+            }
+        }
+        return "The book with ISBN " + ISBN + " is not available or does not exist.";
+    }
+
+
+
+    public String returnBook(String loanID, List<Loan> loanList) {
+        if (loanID == null || loanID.isEmpty()) {
+            return "Loan does not exist";
+        }
+        System.out.println("Debugging: Checking loans in the system...");
+        for (Loan loan : loanList) {
+            System.out.println("Loan ID in list: " + loan.getLoanID());
+            if (loan.getLoanID().trim().equalsIgnoreCase(loanID.trim())) {
+                loanList.remove(loan); // Ta bort lånet från listan
+                return "The book with Loan ID '" + loanID + "' has been returned.";
             }
         }
 
-        //    return loanID + userName;
+
+        return "No loan found with ID '" + loanID + "'.";
     }
+
+
 
 
 
