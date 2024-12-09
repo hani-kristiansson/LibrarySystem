@@ -28,12 +28,13 @@ public class LibraryInfo {
                     break;
 
                 case 2:
-                    librarySystem.borrowBook();
+                    //librarySystem.borrowBook();
                     break;
 
                 case 3:
                     Loan loan = new Loan("1234", "firstUser");
-                    librarySystem.returnBook(loan);
+                    //TODO fix this!
+                    //librarySystem.returnBook(loan);
                     break;
 
                 case 4:

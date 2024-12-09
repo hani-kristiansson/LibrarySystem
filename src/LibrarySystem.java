@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class LibrarySystem {
+public class LibrarySystem{
 
     private List<Member> memberList;
     private List<Book> bookList;
     private List<Loan> loanList;
+    Scanner scan = new Scanner(System.in);
+    Person person = new Person();
 
     public LibrarySystem() {
+        super();
         memberList = null;
         this.bookList = new ArrayList<>();
         loanList = null;
@@ -52,13 +55,13 @@ public class LibrarySystem {
    
 
     public void createAdminAccount() {
-        Scanner scan = new Scanner(System.in);
+        ArrayList<String[]> adminNamePassword = new ArrayList<>();
         // Den ska vara admin.getname
         System.out.println("Admin name: ");
         String adminName = scan.nextLine();
         // Den ska vara admin.getpassword
         System.out.println("Admin password");
-        int adminPassword = scan.nextInt();
+        String adminPassword = scan.next();
 
         try (FileWriter fileWriter = new FileWriter("FileNameAdmin.txt", true)) {
             fileWriter.write(adminName + " " + adminPassword + "\n");
@@ -66,11 +69,25 @@ public class LibrarySystem {
             System.out.println("Kunde ej skapa filen");
         }
 
-
+        adminNamePassword.add(new String []{adminName,adminPassword});
     }
 
-    public void createUserAccount(String username) {
-        System.out.println();
+    public void createUserAccount() {
+        ArrayList<String[]> userNamePassword = new ArrayList<>();
+        // Den ska vara admin.getname
+        System.out.println("User name: ");
+        String adminName = scan.nextLine();
+        // Den ska vara admin.getpassword
+        System.out.println("User password");
+        String adminPassword = scan.next();
+
+        try (FileWriter fileWriter = new FileWriter("FileNameUser.txt", true)) {
+            fileWriter.write(adminName + " " + adminPassword + "\n");
+        } catch (IOException e) {
+            System.out.println("Kunde ej skapa filen");
+        }
+
+        userNamePassword.add(new String []{adminName,adminPassword});
 
 
     }
