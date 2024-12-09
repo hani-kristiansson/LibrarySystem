@@ -10,6 +10,7 @@ public class Person {
         this.userName = userName;
         this.password = password;
     }
+    public Person(){}
 
     public void setName(String name) {
         this.name = name;
