@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Book {
 
-    private String bookName;
-    private String author;
-    private String ISBN;
-    private String publisher;
-    private String genre;
-    private int publishYear;
+    private final String bookName;
+    private final String author;
+    private final String ISBN;
+    private final String publisher;
+    private final String genre;
+    private final int publishYear;
     private int quantity;
     private List <Book> bookList = new ArrayList<Book>();
 
@@ -140,5 +140,13 @@ public class Book {
 
     public String getISBN() {
         return ISBN;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
     }
 }
