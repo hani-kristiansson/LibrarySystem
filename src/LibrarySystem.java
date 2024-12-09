@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ public class LibrarySystem {
 
     public LibrarySystem() {
         memberList = null;
-        bookList = null;
+        this.bookList = new ArrayList<>();
         loanList = null;
     }
 
@@ -21,15 +22,34 @@ public class LibrarySystem {
 
     }
 
-    //TODO borrow a book method
-    public void borrowBook(){
 
+    public String loanBook(Book book) {
+        if (book == null) {
+            return "Book does not exist";
+        }
+
+        if (!book.isAvailable()) {
+            return "The book is already out on a loan.";
+        }
+
+        book.setAvailable(false);
+        return "The book '" + book.getTitle() + "' has been borrowed.";
     }
 
-    //TODO return a book method
-    public void returnBook(Loan loanID) {
+    public String returnBook(Book book) {
+        if (book == null) {
+            return "Book does not exist";
+        }
 
+        if (book.isAvailable()) {
+            return "The book is already in the library system";
+        }
+
+        book.setAvailable(true);
+        return "The book '" + book.getTitle() + "' has returned.";
     }
+   
+   
 
     public void createAdminAccount() {
         Scanner scan = new Scanner(System.in);
@@ -70,6 +90,10 @@ public class LibrarySystem {
 
     public void setBookList(List<Book> bookList) {
         this.bookList = bookList;
+    }
+
+    public void addBook(Book book) {
+        bookList.add(book);
     }
 }
 
