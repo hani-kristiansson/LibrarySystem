@@ -10,7 +10,7 @@ public class LibraryInfo {
 
     public LibraryInfo(LibrarySystem librarySystem) {
         System.out.println(welcomeMessage);
-        System.out.println("1. Find a book \n 2. Borrow a book \n 3. Return a book \n 4. Exit \n \n"
+        System.out.println("\n 1. Find a book \n 2. Borrow a book \n 3. Return a book \n 4. Exit \n \n"
                 + libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
 
         Scanner scanner = new Scanner(System.in);
