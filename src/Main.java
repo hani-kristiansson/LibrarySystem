@@ -7,5 +7,7 @@ public class Main {
 
         LibrarySystem librarySystem = new LibrarySystem();
         librarySystem.createAdminAccount();
+
+        LibraryInfo libraryInfo = new LibraryInfo(librarySystem);
     }
 }
