@@ -31,11 +31,10 @@ public class LibrarySystem{
             return "Book does not exist";
         }
 
-        if (!book.isAvailable()) {
+        if (!book.isAvailable(book)) {
             return "The book is already out on a loan.";
         }
 
-        book.setAvailable(false);
         return "The book '" + book.getTitle() + "' has been borrowed.";
     }
 
@@ -44,11 +43,10 @@ public class LibrarySystem{
             return "Book does not exist";
         }
 
-        if (book.isAvailable()) {
+        if (book.isAvailable(book)) {
             return "The book is already in the library system";
         }
 
-        book.setAvailable(true);
         return "The book '" + book.getTitle() + "' has returned.";
     }
    
