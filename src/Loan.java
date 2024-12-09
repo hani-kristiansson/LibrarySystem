@@ -56,9 +56,7 @@ public class Loan {
         if (loanID == null || loanID.isEmpty()) {
             return "Loan does not exist";
         }
-        System.out.println("Debugging: Checking loans in the system...");
         for (Loan loan : loanList) {
-            System.out.println("Loan ID in list: " + loan.getLoanID());
             if (loan.getLoanID().trim().equalsIgnoreCase(loanID.trim())) {
                 loanList.remove(loan); // Ta bort lånet från listan
                 return "The book with Loan ID '" + loanID + "' has been returned.";
