@@ -7,32 +7,39 @@ import java.util.List;
 
 public class Book {
 
-    private String bookName;
-    private String author;
-    private String ISBN;
-    private String publisher;
-    private String genre;
-    private int publishYear;
-    private boolean isAvailable;
+    private final String bookName;
+    private final String author;
+    private final String ISBN;
+    private final String publisher;
+    private final String genre;
+    private final int publishYear;
+    private int quantity;
+    private List <Book> bookList = new ArrayList<Book>();
 
-    public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear) {
+    public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear, int quantity) {
         this.bookName = bookName;
         this.author = author;
         this.ISBN = ISBN;
         this.publisher = publisher;
         this.genre = genre;
         this.publishYear = publishYear;
-        this.isAvailable = true;
+        this.quantity = quantity;
     }
 
-    public boolean isAvailable() {
-
-        return isAvailable;
+    public boolean isAvailable(Book book) {
+        if (book.quantity > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void setAvailable(boolean available) {
-        this.isAvailable = available;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getTitle() {
@@ -42,8 +49,8 @@ public class Book {
     //Test
 
     public static List<Book> getBooks() {
-        String readInBookName, readInAuthor, readInISBN, readInPublisher, readInGenre, readInYear;
-        int readInYearInt;
+        String readInBookName, readInAuthor, readInISBN, readInPublisher, readInGenre, readInYear, readInQuantity;
+        int readInYearInt, readInQuantityInt;
         int i = 0;
         List<Book> bookList = new ArrayList<Book>();
 
@@ -59,9 +66,12 @@ public class Book {
                     readInPublisher = br.readLine();
                     readInGenre = br.readLine();
                     readInYear = br.readLine();
+                    readInQuantity = br.readLine();
+
 
                     readInYearInt = Integer.parseInt(readInYear);
-                    Book book = new Book(readInBookName,readInAuthor,readInISBN,readInPublisher,readInGenre,readInYearInt);
+                    readInQuantityInt = Integer.parseInt(readInQuantity);
+                    Book book = new Book(readInBookName,readInAuthor,readInISBN,readInPublisher,readInGenre,readInYearInt, readInQuantityInt);
                     bookList.add(book);
             }
         }catch (FileNotFoundException e) {
@@ -75,7 +85,8 @@ public class Book {
 
     public static String printInfo(Book book) {
 
-        return book.bookName +"\n"+ book.author + "\n"+ book.ISBN + "\n"+ book.publisher + "\n"+ book.genre + "\n"+ book.publishYear+ "\n";
+        return book.bookName +"\n"+ book.author + "\n"+ book.ISBN + "\n"+ book.publisher
+                + "\n"+ book.genre + "\n"+ book.publishYear+ "\n"+ book.quantity +"\n";
     }
 
 
@@ -106,6 +117,8 @@ public class Book {
 
 
 
+
+
     public static void main(String[] args) {
         // Get books from file
         List<Book> books = Book.getBooks();
@@ -123,5 +136,17 @@ public class Book {
         if (searchQuery != null && !searchQuery.isEmpty()) {
             searchBooks(books, searchQuery);
         }
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
     }
 }

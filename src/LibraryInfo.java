@@ -35,6 +35,7 @@ public class LibraryInfo {
 
                 case 3:
                     Loan loan = new Loan("1234", "firstUser");
+
                     //TODO fix this!
                     //librarySystem.returnBook(loan);
                     break;
