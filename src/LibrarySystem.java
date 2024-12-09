@@ -17,10 +17,11 @@ public class LibrarySystem {
         loanList = null;
     }
 
-
+    //TODO search a book method
     public void search() {
 
     }
+
 
     public String loanBook(Book book) {
         if (book == null) {
@@ -47,10 +48,8 @@ public class LibrarySystem {
         book.setAvailable(true);
         return "The book '" + book.getTitle() + "' has returned.";
     }
-
-    public void returnBook(Loan loanID) {
-
-    }
+   
+   
 
     public void createAdminAccount() {
         Scanner scan = new Scanner(System.in);
