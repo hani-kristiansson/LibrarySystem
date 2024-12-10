@@ -6,6 +6,9 @@ public class LibraryInfo {
 
     LibraryInfo(LibrarySystem librarySystem){
         boolean loggedIn = false;
+        boolean adminLoggedIn = false;
+        boolean running = true;
+
         String libraryName = "Bookworm Library";
         String libraryLocation = "Tomtebodavägen 3A, 171 65 Solna";
         String libraryTelephoneNumber = "08-466 60 00";
@@ -13,12 +16,12 @@ public class LibraryInfo {
         String userNameLOGGEDIN = "Guest";
         List<Book> bookList = Book.getBooks();
         List<Loan> loanList = new ArrayList<>();
+        List<Member> memberList = Member.getMembers();
 
         Scanner scanner = new Scanner(System.in);
 
-        while (!loggedIn) {
-            System.out.println("Login or Sign up");
-            System.out.println("1. Login\n2. Sign up");
+        while (!loggedIn && !adminLoggedIn) {
+            System.out.println("1. Login\n2. Sign up\n3.Admin Login\n");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear buffer
 
@@ -31,6 +34,12 @@ public class LibraryInfo {
                 case 2:
                     System.out.println("Account created successfully! Please log in.");
                     break;
+                case 3:
+                    System.out.println("Admin logged in");
+                    adminLoggedIn = true;
+                    running = false;
+
+                    break;
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
@@ -38,7 +47,6 @@ public class LibraryInfo {
 
         System.out.println("Welcome to " + libraryName + "!");
 
-        boolean running = true;
         while (running) {
             System.out.println("\n 1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
             System.out.println(libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
@@ -86,10 +94,7 @@ public class LibraryInfo {
                     break;
 
                 case 4:
-
                     System.out.println(Book.printInfo(bookList.get(librarySystem.getRandomBook())));
-
-
                     break;
                 case 5:
                     System.out.println("Thanks for your visit. Please come again.");
@@ -100,6 +105,37 @@ public class LibraryInfo {
                     System.out.println("Invalid input. Please select a valid option.");
             }
         }
+        while (adminLoggedIn) {
+
+            System.out.println("1.Check Loans\n2.Check Members\n3.Delete Member\n4.Create new Admin Account\n5.Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Clear buffer
+            switch (choice){
+                case 1:
+                    //Check Loans
+                break;
+                case 2:
+                    //Check members
+                    System.out.println("Members List:\n" + memberList.toString());
+                break;
+                case 3:
+                    //Delete Member
+                    System.out.println("Whats the username: ");
+                    String temp = scanner.nextLine();
+                    librarySystem.deleteUser(temp,memberList);
+                    librarySystem.updateUserFile(memberList);
+                break;
+                case 4:
+                    librarySystem.createAdminAccount();
+                    break;
+                case 5:
+                    //Exit
+                    adminLoggedIn = false;
+                break;
+            }
+
+        }
+
 
         System.out.println("Program terminated.");
     }

@@ -104,9 +104,6 @@ public class Book {
             if (book.quantity == 0){
                 Scanner scan = new Scanner(System.in);
                 System.out.println("The book is not available, Would you like to stand in queue?");
-
-
-
             }
         }
 
