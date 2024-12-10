@@ -46,7 +46,7 @@ public class LibrarySystem{
 
 
 
-    public void createUserAccount() {
+    public String createUserAccount() {
         System.out.println("enter your name: ");
         String name = scan.nextLine();
 
@@ -60,11 +60,6 @@ public class LibrarySystem{
         System.out.println("Create a pincode 4 digits:");
         int pincode = scan.nextInt();
 
-
-
-
-
-
         try (FileWriter fileWriter = new FileWriter("FileNameUser.txt", true)) {
             fileWriter.write(name + "," + yearOfBirth + "," + userName + "," + pincode + "\n");
         } catch (IOException e) {
@@ -73,12 +68,22 @@ public class LibrarySystem{
 
         memberList.add(new Member(name, yearOfBirth, userName, pincode));
         System.out.println("Account created successfully, Welcome " + name);
+        return userName;
 
     }
 
     public List<Member> getMemberList() {
         return memberList;
 
+    }
+
+    public Member getMember(String userName) {
+        for (Member member : memberList) {
+            if (member.getUserName().equals(userName)) {
+                return member;
+            }
+        }
+        return null;
     }
 
     public void setMemberList(List<Member> memberList) {
