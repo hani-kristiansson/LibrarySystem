@@ -7,7 +7,6 @@ public class Main {
 
         LibrarySystem librarySystem = new LibrarySystem();
 
-        librarySystem.createUserAccount();
 
         LibraryInfo libraryInfo = new LibraryInfo(librarySystem);
 

@@ -12,19 +12,37 @@ public class LibraryInfo {
     private final List<Loan> loanList = new ArrayList<>();
 
 
-
     List<Book> bookList;
 
     public LibraryInfo(LibrarySystem librarySystem) {
         bookList = Book.getBooks();
+
+        Scanner scanner = new Scanner(System.in);
+
+        boolean loggedIn = false;
+        while (!loggedIn) {
+            System.out.println("Login or Sign up");
+            System.out.println("1. Login" + "\n" + "2. Sign up");
+            switch (scanner.nextInt()){
+                case 1:
+                    librarySystem.createUserAccount();
+                    loggedIn = true;
+                    break;
+                case 2:
+                    librarySystem.createAdminAccount();
+                    loggedIn = true;
+                    break;
+            }
+
+        }
+
         System.out.println(welcomeMessage);
         System.out.println("\n 1. Find a book \n 2. Borrow a book \n 3. Return a book \n 4. Exit \n \n"
                 + libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
 
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
+        while (loggedIn) {
             switch (scanner.nextInt()) {
+
                 case 1:
                     System.out.println("Enter search term: ");
                     Scanner scanner2 = new Scanner(System.in);
@@ -41,13 +59,13 @@ public class LibraryInfo {
                     if (userInput.isEmpty()) {
                         System.out.println("You must choose a valid book.");
                     } else {
-                        Loan loan = new Loan(userInput, "someUserName");
-                        String result = loan.loanBook(userInput, bookList, "someUserName");
-                        if(result.startsWith("Loan created successfully!")){
-                            loanList.add(loan);
-
-                        }
-                        System.out.println(result);
+//                        Loan loan = new Loan(userInput, "someUserName");
+//                        String result = loan.loanCreator(Member, bookList, "someUserName");
+//                        if(result.startsWith("Loan created successfully!")){
+//                            loanList.add(loan);
+//
+//                        }
+//                        System.out.println(result);
 
                     }
                     break;

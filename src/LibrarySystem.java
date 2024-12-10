@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,15 +6,16 @@ import java.util.Scanner;
 
 public class LibrarySystem{
 
-    private List<Member> memberList;
+
     private List<Book> bookList;
     private List<Loan> loanList;
     Scanner scan = new Scanner(System.in);
-    Person person = new Person();
+    private List<Member> memberList;
+
 
     public LibrarySystem() {
         super();
-        memberList = null;
+        this.memberList = new ArrayList<>();
         this.bookList = new ArrayList<>();
         loanList = null;
     }
@@ -30,10 +30,8 @@ public class LibrarySystem{
 
     public void createAdminAccount() {
         ArrayList<String[]> adminNamePassword = new ArrayList<>();
-        // Den ska vara admin.getname
         System.out.println("Admin name: ");
         String adminName = scan.nextLine();
-        // Den ska vara admin.getpassword
         System.out.println("Admin password");
         String adminPassword = scan.next();
 
@@ -46,23 +44,35 @@ public class LibrarySystem{
         adminNamePassword.add(new String []{adminName,adminPassword});
     }
 
+
+
     public void createUserAccount() {
-        ArrayList<String[]> userNamePassword = new ArrayList<>();
-        // Den ska vara admin.getname
+        System.out.println("enter your name: ");
+        String name = scan.nextLine();
+
+        System.out.println("Year of birth: ");
+        int yearOfBirth = scan.nextInt();
+
         System.out.println("User name: ");
-        String adminName = scan.nextLine();
-        // Den ska vara admin.getpassword
-        System.out.println("User password");
-        String adminPassword = scan.next();
+        scan.nextLine();
+        String userName = scan.nextLine();
+
+        System.out.println("Create a pincode 4 digits:");
+        int pincode = scan.nextInt();
+
+
+
+
+
 
         try (FileWriter fileWriter = new FileWriter("FileNameUser.txt", true)) {
-            fileWriter.write(adminName + " " + adminPassword + "\n");
+            fileWriter.write(name + "," + yearOfBirth + "," + userName + "," + pincode + "\n");
         } catch (IOException e) {
             System.out.println("Kunde ej skapa filen");
         }
 
-        userNamePassword.add(new String []{adminName,adminPassword});
-
+        memberList.add(new Member(name, yearOfBirth, userName, pincode));
+        System.out.println("Account created successfully, Welcome " + name);
 
     }
 
@@ -86,24 +96,6 @@ public class LibrarySystem{
     public void addBook(Book book) {
         bookList.add(book);
     }
-
-    //LibrarySystem library = new LibrarySystem();
-    //Book book = new Book("The Hobbit", "J.R.R. Tolkien", "1234567890", "?", "Fantasy", 2001);
-        //library.addBook(book);
-
-    //String loanResult = library.loanBook(book);
-        //System.out.println(loanResult);
-
-    // Försöker låna den igen
-    //loanResult = library.loanBook(book);
-        //System.out.println(loanResult);
-
-
-    //String returnResult = library.returnBook(book);
-        //System.out.println(returnResult);
-
-    //returnResult = library.returnBook(book);
-        //System.out.println(returnResult);
 
 }
 

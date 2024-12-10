@@ -16,19 +16,34 @@ public class Loan {
     }
 
 
-
     public LocalDate calculateDueDate(LocalDate localDate) {
         return localDate.plusDays(30);
     }
 
-    public void loanCreator(Member member, String ISBN, List<Book> bookList) {
+    public String loanCreator(Member member, String ISBN, List<Book> bookList) {
         Loan loan = new Loan(ISBN, member.getUserName());
-        String result = loan.loanBook(ISBN, bookList, member.getUserName());
-        if (result.startsWith("Loan created successfully!")) {
-            System.out.println(result);
-        } else {
-            System.out.println(result);
+        if (member.getMemberID() == null || member.getMemberID().isEmpty()) {
+            System.out.println("Invalid memberID.");
         }
+        for (Book book : bookList) {
+            if (book.getISBN().trim().equals(ISBN.trim()) && book.isAvailable()) {
+                book.setQuantity(book.getQuantity() - 1);
+                loanID = ISBN + member.getUserName() + LocalDate.now();
+                startDate = LocalDate.now();
+                endDate = calculateDueDate(startDate);
+                return "Loan created successfully! Loan ID: " + this.loanID + ", Due Date: " + this.endDate;
+
+            }
+
+            String result = loan.loanBook(ISBN, bookList, member.getUserName());
+            if (result.startsWith("Loan created successfully!")) {
+                System.out.println(result);
+            } else {
+                System.out.println(result);
+            }
+        }
+
+        return "The book with ISBN " + ISBN + " is not available or does not exist.";
     }
 
 
