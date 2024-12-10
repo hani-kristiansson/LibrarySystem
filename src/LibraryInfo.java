@@ -16,6 +16,7 @@ public class LibraryInfo {
         String userNameLOGGEDIN = "Guest";
         List<Book> bookList = Book.getBooks();
         List<Loan> loanList = new ArrayList<>();
+        Loan.readLoanFromFile(loanList);
         List<Member> memberList = Member.getMembers();
 
         Scanner scanner = new Scanner(System.in);
@@ -76,6 +77,7 @@ public class LibraryInfo {
                         String result = loan.loanCreator(userNameLOGGEDIN, ISBNInput, bookList);
                         if (result.startsWith("Loan created successfully!")) {
                             loanList.add(loan);
+                            Loan.saveLoansToFile(loanList);
                         }
                         System.out.println(result);
                     }
@@ -87,8 +89,8 @@ public class LibraryInfo {
                     if (loanID.isEmpty()) {
                         System.out.println("You must enter a valid Loan ID.");
                     } else {
-                        Loan loan = new Loan("", "");
-                        String result = loan.returnBook(loanID, loanList);
+                        String result = Loan.returnBook(loanID, loanList);
+                        Loan.saveLoansToFile(loanList);
                         System.out.println(result);
                     }
                     break;
