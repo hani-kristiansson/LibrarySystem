@@ -2,6 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class LibrarySystem{
@@ -100,6 +101,11 @@ public class LibrarySystem{
 
     public void addBook(Book book) {
         bookList.add(book);
+    }
+
+    public int getRandomBook(){
+        Random random = new Random();
+        return random.nextInt(50);
     }
 
 }

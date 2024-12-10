@@ -4,16 +4,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Book {
 
-    private final String bookName;
-    private final String author;
-    private final String ISBN;
-    private final String publisher;
-    private final String genre;
-    private final int publishYear;
+    private  String bookName;
+    private  String author;
+    private  String ISBN;
+    private  String publisher;
+    private  String genre;
+    private  int publishYear;
     private int quantity;
+    private List <String[]> queue;
 
     public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear, int quantity) {
         this.bookName = bookName;
@@ -86,7 +88,7 @@ public class Book {
 
 
     public static void searchBooks(List<Book> bookList, String searchedString) {
-        List<Book> results = new ArrayList<>();
+        List<Book> searchResults = new ArrayList<>();
         String lowerSearchString = searchedString.toLowerCase();
 
         for (Book book : bookList) {
@@ -95,43 +97,35 @@ public class Book {
                     book.ISBN.toLowerCase().contains(lowerSearchString) ||
                     book.publisher.toLowerCase().contains(lowerSearchString) ||
                     book.genre.toLowerCase().contains(lowerSearchString) ||
-                    String.valueOf(book.publishYear).contains(lowerSearchString)) {
-                results.add(book);
+                    String.valueOf(book.publishYear).contains(lowerSearchString) ||
+                    book.quantity == Integer.parseInt(searchedString)) {
+                searchResults.add(book);
+            }
+            if (book.quantity == 0){
+                Scanner scan = new Scanner(System.in);
+                System.out.println("The book is not available, Would you like to stand in queue?");
+
+
+
             }
         }
 
-        if (results.isEmpty()) {
+
+
+        if (searchResults.isEmpty()) {
             System.out.println("No books found matching \"" + searchedString + "\".");
         } else {
             System.out.println("Books matching \"" + searchedString + "\":");
-            for (Book result : results) {
+            for (Book result : searchResults) {
                 System.out.println(printInfo(result));
             }
         }
     }
 
+    public void BookQueue (List<String> bookqueue){
 
-
-
-
-    public static void main(String[] args) {
-        // Get books from file
-        List<Book> books = Book.getBooks();
-
-        int i = 0;
-        // Print all books to console
-        /*
-        for (Book book : books) {
-
-            System.out.println("Book "+i+book);
-            i++;
-        }
-*/
-        String searchQuery = JOptionPane.showInputDialog("Enter a word to search for books:");
-        if (searchQuery != null && !searchQuery.isEmpty()) {
-            searchBooks(books, searchQuery);
-        }
     }
+
 
     public String getISBN() {
         return ISBN;
