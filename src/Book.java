@@ -14,7 +14,6 @@ public class Book {
     private final String genre;
     private final int publishYear;
     private int quantity;
-    private List <Book> bookList = new ArrayList<Book>();
 
     public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear, int quantity) {
         this.bookName = bookName;
@@ -26,12 +25,8 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public boolean isAvailable(Book book) {
-        if (book.quantity > 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isAvailable() {
+        return this.quantity > 0;
     }
 
     public void setQuantity(int quantity) {

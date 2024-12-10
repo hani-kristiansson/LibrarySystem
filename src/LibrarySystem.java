@@ -26,31 +26,7 @@ public class LibrarySystem{
     }
 
 
-    public String loanBook(Book book) {
-        if (book == null) {
-            return "Book does not exist";
-        }
 
-        if (!book.isAvailable(book)) {
-            return "The book is already out on a loan.";
-        }
-
-        return "The book '" + book.getTitle() + "' has been borrowed.";
-    }
-
-    public String returnBook(Book book) {
-        if (book == null) {
-            return "Book does not exist";
-        }
-
-        if (book.isAvailable(book)) {
-            return "The book is already in the library system";
-        }
-
-        return "The book '" + book.getTitle() + "' has returned.";
-    }
-   
-   
 
     public void createAdminAccount() {
         ArrayList<String[]> adminNamePassword = new ArrayList<>();
