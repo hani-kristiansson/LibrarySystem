@@ -18,29 +18,40 @@ public class LibraryInfo {
         List<Loan> loanList = new ArrayList<>();
         Loan.readLoanFromFile(loanList);
         List<Member> memberList = Member.getMembers();
+        List<Admin> adminList = Admin.getAdmins();
 
         Scanner scanner = new Scanner(System.in);
 
         while (!loggedIn && !adminLoggedIn) {
-            System.out.println("1. Login\n2. Sign up\n3.Admin Login\n");
+            System.out.println("1. Login\n2. Sign up\n3. Admin Login\n4. Create Admin Account");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear buffer
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter username: ");
+                    System.out.println("Enter your username: ");
                     userNameLOGGEDIN = scanner.nextLine().trim();
-                    loggedIn = true;
+                    librarySystem.login(userNameLOGGEDIN, false);
+                    loggedIn = librarySystem.login(userNameLOGGEDIN, false);
                     break;
                 case 2:
-                    System.out.println("Account created successfully! Please log in.");
+                    librarySystem.createUserAccount();
+                    System.out.println("Account created successfully! You are now logged in.");
+                    userNameLOGGEDIN = librarySystem.createUserAccount();
+                    loggedIn = true;
                     break;
                 case 3:
-                    System.out.println("Admin logged in");
-                    adminLoggedIn = true;
-                    running = false;
-
+                    System.out.println("Enter your username Admin: ");
+                    userNameLOGGEDIN = scanner.nextLine().trim();
+                    librarySystem.login(userNameLOGGEDIN, true);
+                    adminLoggedIn = librarySystem.login(userNameLOGGEDIN, true);
                     break;
+                case 4:
+                    librarySystem.createAdminAccount();
+                    System.out.println("Admin account created successfully! You are now logged in.");
+                    userNameLOGGEDIN = librarySystem.createAdminAccount();
+                    adminLoggedIn = true;
+
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
@@ -48,7 +59,7 @@ public class LibraryInfo {
 
         System.out.println("Welcome to " + libraryName + "!");
 
-        while (running) {
+        while (loggedIn || adminLoggedIn) {
             System.out.println("\n 1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
             System.out.println(libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
 
@@ -101,6 +112,7 @@ public class LibraryInfo {
                 case 5:
                     System.out.println("Thanks for your visit. Please come again.");
                     running = false;
+                    loggedIn = false;
                     break;
 
                 default:

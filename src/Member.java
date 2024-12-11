@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,21 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Member extends Person {
-    private String memberID;
+    private String userName;
     private int numberOfLoans = 0;
 
     public Member(String name, int yearOfBirth, String userName, int password) {
         super(name, yearOfBirth, userName, password);
         this.numberOfLoans = 0;
-        this.memberID = userName;
-    }
-    public Member(String memberID, int numberOfLoans){
-        this.memberID=memberID;
-        this.numberOfLoans=numberOfLoans;
+        this.userName = userName;
     }
 
-    public String getMemberID() {
-        return memberID;
+    public String getUserName() {
+        return userName;
     }
 
     public int getNumberOfLoans() {
@@ -30,7 +25,7 @@ public class Member extends Person {
 
     @Override
     public String toString() {
-        return memberID;
+        return userName;
     }
 
 

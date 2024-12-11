@@ -9,44 +9,51 @@ public class LibrarySystem {
     private List<Loan> loanList;
     Scanner scan = new Scanner(System.in);
     private List<Member> memberList;
+    private List<Admin> adminList;
 
 
     public LibrarySystem() {
         super();
-        this.memberList = new ArrayList<>();
+        this.memberList = Member.getMembers();
+        this.adminList = Admin.getAdmins();
         this.bookList = new ArrayList<>();
         loanList = null;
     }
 
 
+    public boolean login(String userName, boolean isAdmin) {
+        String username = userName;
+        int pincode = 0;
+        List <? extends Person> personlist = isAdmin ? adminList : memberList;
 
-
-    public void createAdminAccount() {
-        System.out.println("User name: ");
-        String userName = scan.nextLine();
-
-        System.out.println("Create a pincode 4 digits:");
-        int pincode = scan.nextInt();
-
-        try (FileWriter fileWriter = new FileWriter("FileNameAdmin.txt", true)) {
-            fileWriter.write( userName + "," + pincode + "\n");
-        } catch (IOException e) {
-            System.out.println("Kunde ej skapa filen");
+        for (Member member : memberList) {
+            username = username.trim();
+            if (member.getUserName().equalsIgnoreCase(username)) {
+                System.out.println("Enter your pincode: ");
+                pincode = scan.nextInt();
+                if (member.getPassword() == pincode) {
+                    System.out.println("Welcome " + member.getName());
+                    return true;
+                } else {
+                    System.out.println("Invalid pin code try again");
+                    return false;
+                }
+            }
         }
-
-        System.out.println("Admin Account created successfully, Welcome " + userName);
+        System.out.println("Login failed, try again");
+        return false;
     }
 
 
     public String createUserAccount() {
-        System.out.println("enter your name: ");
+        System.out.println("Enter your name: ");
         String name = scan.nextLine();
 
         System.out.println("Year of birth: ");
         int yearOfBirth = scan.nextInt();
+        scan.nextLine();
 
         System.out.println("User name: ");
-        scan.nextLine();
         String userName = scan.nextLine();
 
         System.out.println("Create a pincode 4 digits:");
@@ -55,13 +62,39 @@ public class LibrarySystem {
         try (FileWriter fileWriter = new FileWriter("FileNameUser.txt", true)) {
             fileWriter.write(name + "," + yearOfBirth + "," + userName + "," + pincode + "\n");
         } catch (IOException e) {
-            System.out.println("Kunde ej skapa filen");
+            System.out.println("Could not create the file");
         }
 
         memberList.add(new Member(name, yearOfBirth, userName, pincode));
-        System.out.println("Account created successfully, Welcome " + name);
+        System.out.println("`\nWelcome " + name);
         return userName;
 
+    }
+
+    public String createAdminAccount() {
+        System.out.println("Enter your name: ");
+        String name = scan.nextLine();
+
+        System.out.println("Year of birth: ");
+        int yearOfBirth = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("User name: ");
+        String userName = scan.nextLine();
+
+        System.out.println("Create a pincode 4 digits:");
+        int pincode = scan.nextInt();
+
+        try (FileWriter fileWriter = new FileWriter("FileNameAdmin.txt", true)) {
+            fileWriter.write( name + ","+ yearOfBirth + "," + userName + "," + pincode + "\n");
+        } catch (IOException e) {
+            System.out.println("Could not create the file");
+        }
+
+        adminList.add(new Admin(name, yearOfBirth, userName, pincode));
+
+        System.out.println("Admin " + name + " Welcome!");
+        return userName;
     }
 
     public List<Member> getMemberList() {
@@ -71,7 +104,7 @@ public class LibrarySystem {
 
     public Member getMember(String userName) {
         for (Member member : memberList) {
-            if (member.getUserName().equals(userName)) {
+            if (member.getUserName().equalsIgnoreCase(userName)) {
                 return member;
             }
         }
