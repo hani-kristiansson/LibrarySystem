@@ -7,7 +7,6 @@ public class LibraryInfo {
     LibraryInfo(LibrarySystem librarySystem){
         boolean loggedIn = false;
         boolean adminLoggedIn = false;
-        boolean running = true;
 
         String libraryName = "Bookworm Library";
         String libraryLocation = "Tomtebodavägen 3A, 171 65 Solna";
@@ -18,8 +17,6 @@ public class LibraryInfo {
         List<Loan> loanList = new ArrayList<>();
         Loan.readLoanFromFile(loanList);
         List<Member> memberList = Member.getMembers();
-        List<Admin> adminList = Admin.getAdmins();
-
         Scanner scanner = new Scanner(System.in);
 
         while (!loggedIn && !adminLoggedIn) {
@@ -109,7 +106,6 @@ public class LibraryInfo {
                     break;
                 case 5:
                     System.out.println("Thanks for your visit. Please come again.");
-                    running = false;
                     loggedIn = false;
                     break;
 
