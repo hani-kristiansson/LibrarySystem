@@ -15,7 +15,7 @@ public class Book {
     private  String genre;
     private  int publishYear;
     private int quantity;
-    private List <String[]> queue;
+    private List <String> queue = new ArrayList<>();
 
     public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear, int quantity) {
         this.bookName = bookName;
@@ -119,8 +119,18 @@ public class Book {
         }
     }
 
-    public void BookQueue (List<String> bookqueue){
+    public void BookQueue (String userName){
+        if (!queue.contains(userName)) {
+            queue.add(userName);
+            System.out.println(userName + " has been added to the queue for the book: " + bookName);
+        } else {
+            System.out.println(userName + " is already in the queue for this book.");
+        }
 
+
+    }
+    public List<String> getQueue() {
+        return queue;
     }
 
 

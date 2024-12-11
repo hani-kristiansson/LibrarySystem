@@ -49,7 +49,7 @@ public class LibraryInfo {
         System.out.println("Welcome to " + libraryName + "!");
 
         while (running) {
-            System.out.println("\n 1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
+            System.out.println("\n 1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Mark a favorite book\n6 Queue for a book \n7. Exit");
             System.out.println(libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
 
             System.out.println("Enter your choice: ");
@@ -99,6 +99,52 @@ public class LibraryInfo {
                     System.out.println(Book.printInfo(bookList.get(librarySystem.getRandomBook())));
                     break;
                 case 5:
+                    System.out.println("Enter the ISBN of the book you want to make your favorite:");
+                    String favoriteISBN = scanner.nextLine().trim();
+                    if (favoriteISBN.isEmpty()) {
+                        System.out.println("You must enter a valid ISBN.");
+                    } else {
+                        boolean memberFound = false;
+                        for (Member member : memberList) {
+                            System.out.println("Checking member: " + member.getMemberID());
+                            if (member.getMemberID().equals(userNameLOGGEDIN)) {
+                                member.addFavoriteBookFromLog(favoriteISBN);//Puts books as favorites
+                                memberFound = true;
+                                break;
+                            }
+
+                        }
+                        if (!memberFound) {
+                            System.out.println("No logged in member found.");
+                        }
+                    }
+                    break;
+                case 6:
+                    System.out.println("Enter the ISBN of the book you want to queue for:");
+                    String queueISBN = scanner.nextLine().trim();
+
+                    if (queueISBN.isEmpty()) {
+                        System.out.println("You must enter a valid ISBN.");
+                    } else {
+                        boolean bookFound = false;
+                        for (Book book : bookList) {
+                            if (book.getISBN().trim().equals(queueISBN.trim())) {
+                                if (!book.isAvailable()) {
+                                    book.BookQueue(userNameLOGGEDIN);
+                                } else {
+                                    System.out.println("The book is available and does not require a queue.");
+                                }
+                                bookFound = true;
+                                break;
+                            }
+                        }
+                        if (!bookFound) {
+                            System.out.println("No book found with ISBN: " + queueISBN);
+                        }
+                    }
+                    break;
+
+                case 7:
                     System.out.println("Thanks for your visit. Please come again.");
                     running = false;
                     break;
