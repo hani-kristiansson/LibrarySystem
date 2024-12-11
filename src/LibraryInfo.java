@@ -28,7 +28,6 @@ public class LibraryInfo {
                 case 1:  // Login User
                     System.out.println("Enter your username: ");
                     userNameLOGGEDIN = scanner.nextLine().trim();
-                    librarySystem.login(userNameLOGGEDIN, false);
                     loggedIn = librarySystem.login(userNameLOGGEDIN, false);
                     break;
                 case 2:  // Create User account
@@ -39,7 +38,6 @@ public class LibraryInfo {
                 case 3:  // Login Admin
                     System.out.println("Enter your username Admin: ");
                     userNameLOGGEDIN = scanner.nextLine().trim();
-                    librarySystem.login(userNameLOGGEDIN, true);
                     adminLoggedIn = librarySystem.login(userNameLOGGEDIN, true);
                     break;
                 case 4:  // Create Admin Account
@@ -55,7 +53,7 @@ public class LibraryInfo {
         System.out.println("Welcome to " + libraryName + "!");
 
         while (loggedIn || adminLoggedIn) {
-            System.out.println("\n 1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
+            System.out.println("\n1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
             System.out.println(libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
 
             System.out.println("Enter your choice: ");

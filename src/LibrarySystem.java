@@ -32,7 +32,7 @@ public class LibrarySystem {
                 System.out.println("Enter your pincode: ");
                 pincode = scan.nextInt();
                 if (member.getPassword() == pincode) {
-                    System.out.println("Welcome " + member.getName());
+                    System.out.println("Hello " + member.getName());
                     return true;
                 } else {
                     System.out.println("Invalid pin code try again");
@@ -48,6 +48,7 @@ public class LibrarySystem {
 
 
     public String createUserAccount() {
+
         System.out.println("Enter your name: ");
         String name = scan.nextLine();
 
@@ -68,10 +69,11 @@ public class LibrarySystem {
         }
 
         memberList.add(new Member(name, yearOfBirth, userName, pincode));
-        System.out.println("`\nWelcome " + name);
+        System.out.println("`\nGreetings " + name);
         return userName;
-
     }
+
+
 
     public String createAdminAccount() {
         System.out.println("Enter your name: ");
@@ -95,7 +97,7 @@ public class LibrarySystem {
 
         adminList.add(new Admin(name, yearOfBirth, userName, pincode));
 
-        System.out.println("Admin " + name + " Welcome!");
+        System.out.println("Admin " + name + " Salutations!");
         return userName;
     }
 
