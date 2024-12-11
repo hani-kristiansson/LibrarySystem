@@ -28,28 +28,26 @@ public class LibraryInfo {
             scanner.nextLine(); // Clear buffer
 
             switch (choice) {
-                case 1:
+                case 1:  // Login User
                     System.out.println("Enter your username: ");
                     userNameLOGGEDIN = scanner.nextLine().trim();
                     librarySystem.login(userNameLOGGEDIN, false);
                     loggedIn = librarySystem.login(userNameLOGGEDIN, false);
                     break;
-                case 2:
-                    librarySystem.createUserAccount();
-                    System.out.println("Account created successfully! You are now logged in.");
+                case 2:  // Create User account
                     userNameLOGGEDIN = librarySystem.createUserAccount();
+                    System.out.println("Account created successfully! You are now logged in.");
                     loggedIn = true;
                     break;
-                case 3:
+                case 3:  // Login Admin
                     System.out.println("Enter your username Admin: ");
                     userNameLOGGEDIN = scanner.nextLine().trim();
                     librarySystem.login(userNameLOGGEDIN, true);
                     adminLoggedIn = librarySystem.login(userNameLOGGEDIN, true);
                     break;
-                case 4:
-                    librarySystem.createAdminAccount();
-                    System.out.println("Admin account created successfully! You are now logged in.");
+                case 4:  // Create Admin Account
                     userNameLOGGEDIN = librarySystem.createAdminAccount();
+                    System.out.println("Admin account created successfully! You are now logged in.");
                     adminLoggedIn = true;
 
                 default:
