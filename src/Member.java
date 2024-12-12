@@ -15,23 +15,9 @@ public class Member extends Person {
         this.userName = userName;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public int getNumberOfLoans() {
-        return numberOfLoans;
-    }
-
-    @Override
-    public String toString() {
-        return userName;
-    }
-
-
     public static List<Member> getMembers() {
-        String readInName,readInYearOfBirth,readInUserName,readInPassword;
-        int readInYearOfBirthInt,readInPasswordInt;
+        String readInName, readInYearOfBirth, readInUserName, readInPassword;
+        int readInYearOfBirthInt, readInPasswordInt;
         int i = 0;
         List<Member> memberList = new ArrayList<Member>();
 
@@ -60,14 +46,26 @@ public class Member extends Person {
                     System.out.println("Invalid line format: " + line);
                 }
             }
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "File not found");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"Something went wrong\n Please Try again");
+            JOptionPane.showMessageDialog(null, "Something went wrong\n Please Try again");
 
         }
         return memberList;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public int getNumberOfLoans() {
+        return numberOfLoans;
+    }
+
+    @Override
+    public String toString() {
+        return userName;
     }
 }

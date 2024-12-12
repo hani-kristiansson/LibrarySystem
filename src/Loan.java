@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Loan {
 
+    protected String loanID;
     private String ISBN;
     private LocalDate startDate;
     private LocalDate endDate;
     private String userName;
-    protected String loanID;
 
     public Loan(String ISBN, String userName) {
         this.ISBN = ISBN;
@@ -29,6 +29,52 @@ public class Loan {
         this.loanID = loanID;
     }
 
+    public static String returnBook(String loanID, List<Loan> loanList) {
+        if (loanID == null || loanID.isEmpty()) {
+            return "Loan does not exist";
+        }
+        for (Loan loan : loanList) {
+            if (loan.getLoanID().trim().equalsIgnoreCase(loanID.trim())) {
+                loanList.remove(loan); // Ta bort lånet från listan
+                return "The book with Loan ID '" + loanID + "' has been returned.";
+            }
+        }
+
+
+        return "No loan found with ID '" + loanID + "'.";
+    }
+
+    public static void saveLoansToFile(List<Loan> loanList) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(Paths.get("LoanLog.txt"))) {
+            for (Loan loan : loanList) {
+                bufferedWriter.write(loan.toString() + "\n");
+            }
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void readLoanFromFile(List<Loan> loanList) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("LoanLog.txt"))) {
+            while (true) {
+                String ISBN = bufferedReader.readLine();
+                if (ISBN == null) {
+                    break;
+                }
+                String userName = bufferedReader.readLine();
+                LocalDate startDate = LocalDate.parse(bufferedReader.readLine());
+                LocalDate endDate = LocalDate.parse(bufferedReader.readLine());
+                String loanID = bufferedReader.readLine();
+
+                Loan loan = new Loan(ISBN, startDate, endDate, userName, loanID);
+
+                loanList.add(loan);
+            }
+        } catch (IOException e) {
+            System.out.println("There is no borrowed book in the list yet.");
+        }
+    }
 
     public LocalDate calculateDueDate(LocalDate localDate) {
         return localDate.plusDays(30);
@@ -51,61 +97,9 @@ public class Loan {
         return "The book with ISBN " + ISBN + " is not available or does not exist.";
     }
 
-
-
-
-
-
-    public static String returnBook(String loanID, List<Loan> loanList) {
-        if (loanID == null || loanID.isEmpty()) {
-            return "Loan does not exist";
-        }
-        for (Loan loan : loanList) {
-            if (loan.getLoanID().trim().equalsIgnoreCase(loanID.trim())) {
-                loanList.remove(loan); // Ta bort lånet från listan
-                return "The book with Loan ID '" + loanID + "' has been returned.";
-            }
-        }
-
-
-        return "No loan found with ID '" + loanID + "'.";
-    }
-
-    public static void saveLoansToFile(List <Loan> loanList) {
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(Paths.get("LoanLog.txt"))) {
-            for (Loan loan : loanList) {
-                bufferedWriter.write(loan.toString()+"\n");
-            }
-            bufferedWriter.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public String toString() {
-        return ISBN + "\n" +userName + "\n" + startDate + "\n" + endDate + "\n" + loanID;
-    }
-
-    public static void readLoanFromFile(List <Loan> loanList) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("LoanLog.txt"))) {
-            while (true) {
-                String ISBN = bufferedReader.readLine();
-                if (ISBN == null) {
-                    break;
-                }
-                String userName = bufferedReader.readLine();
-                LocalDate startDate = LocalDate.parse(bufferedReader.readLine());
-                LocalDate endDate = LocalDate.parse(bufferedReader.readLine());
-                String loanID = bufferedReader.readLine();
-
-                Loan loan = new Loan(ISBN, startDate, endDate, userName, loanID);
-
-                loanList.add(loan);
-            }
-        } catch (IOException e) {
-            System.out.println("There is no borrowed book in the list yet.");
-        }
+        return ISBN + "\n" + userName + "\n" + startDate + "\n" + endDate + "\n" + loanID;
     }
 
     public String getLoanID() {

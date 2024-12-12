@@ -6,11 +6,11 @@ public class LibrarySystem {
 
 
     private static LibrarySystem instance;
+    Scanner scan = new Scanner(System.in);
     private List<Book> bookList;
     private List<Loan> loanList;
     private List<Member> memberList;
     private List<Admin> adminList;
-    Scanner scan = new Scanner(System.in);
 
     private LibrarySystem() {
         super();
@@ -28,10 +28,14 @@ public class LibrarySystem {
     }
 
 
-    public boolean login(String userName, boolean isAdmin) {
+    public boolean login(String userName, boolean isAdmin, int attempts) {
+        if (attempts >= 3) {
+            System.out.println("You have exceeded the number of attempts, try again later");
+            return false;
+        }
         String username = userName;
         int pincode = 0;
-        List <? extends Person> personlist = isAdmin ? adminList : memberList;
+        List<? extends Person> personlist = isAdmin ? adminList : memberList;
 
         for (Member member : memberList) {
             username = username.trim();
@@ -43,7 +47,8 @@ public class LibrarySystem {
                     return true;
                 } else {
                     System.out.println("Invalid pin code try again");
-                    return false;
+                    return login(userName, isAdmin, attempts +1);
+
                 }
 
             }
@@ -66,6 +71,12 @@ public class LibrarySystem {
         System.out.println("User name: ");
         String userName = scan.nextLine();
 
+        checkMember(userName);
+        if (checkMember(userName)) {
+            System.out.println("This username is occupied, please try another one");
+            return createUserAccount();
+        }
+
         System.out.println("Create a pincode 4 digits:");
         int pincode = scan.nextInt();
 
@@ -79,6 +90,16 @@ public class LibrarySystem {
         System.out.println("`\nGreetings " + name);
         return userName;
     }
+
+    public boolean checkMember (String userName) {
+        for (Member member : memberList) {
+            if (member.getUserName().equalsIgnoreCase(userName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 
@@ -97,7 +118,7 @@ public class LibrarySystem {
         int pincode = scan.nextInt();
 
         try (FileWriter fileWriter = new FileWriter("FileNameAdmin.txt", true)) {
-            fileWriter.write( name + ","+ yearOfBirth + "," + userName + "," + pincode + "\n");
+            fileWriter.write(name + "," + yearOfBirth + "," + userName + "," + pincode + "\n");
         } catch (IOException e) {
             System.out.println("Could not create the file");
         }
@@ -108,11 +129,6 @@ public class LibrarySystem {
         return userName;
     }
 
-    public List<Member> getMemberList() {
-        return memberList;
-
-    }
-
     public Member getMember(String userName) {
         for (Member member : memberList) {
             if (member.getUserName().equalsIgnoreCase(userName)) {
@@ -120,22 +136,6 @@ public class LibrarySystem {
             }
         }
         return null;
-    }
-
-    public void setMemberList(List<Member> memberList) {
-        this.memberList = memberList;
-    }
-
-    public List<Book> getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
-    }
-
-    public void addBook(Book book) {
-        bookList.add(book);
     }
 
     public int getRandomBook() {
@@ -161,7 +161,6 @@ public class LibrarySystem {
             System.out.println("An error occurred while clearing the file: " + e.getMessage());
         }
     }
-
 
     public void deleteUser(String userName, List<Member> memberListIn) {
         Iterator<Member> iterator = memberListIn.iterator(); // Create an iterator for the list

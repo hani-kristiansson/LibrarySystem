@@ -15,8 +15,8 @@ public class Admin extends Person {
     }
 
     public static List<Admin> getAdmins() {
-        String readInName,readInYearOfBirth,readInUserName,readInPassword;
-        int readInYearOfBirthInt,readInPasswordInt;
+        String readInName, readInYearOfBirth, readInUserName, readInPassword;
+        int readInYearOfBirthInt, readInPasswordInt;
         int i = 0;
         List<Admin> adminList = new ArrayList<>();
 
@@ -45,19 +45,18 @@ public class Admin extends Person {
                     System.out.println("Invalid line format: " + line);
                 }
             }
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "File not found");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"Something went wrong\n Please Try again");
+            JOptionPane.showMessageDialog(null, "Something went wrong\n Please Try again");
 
         }
         return adminList;
     }
 
     //Borrar un miembro ya existente.
-    public void RemoveMember(String fileConMiembros){
+    public void RemoveMember(String fileConMiembros) {
         System.out.println("Which member do you want to remove? ");
         String toRemove = scan.next();
         //

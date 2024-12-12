@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class Book {
 
-    private  String bookName;
-    private  String author;
-    private  String ISBN;
-    private  String publisher;
-    private  String genre;
-    private  int publishYear;
+    private String bookName;
+    private String author;
+    private String ISBN;
+    private String publisher;
+    private String genre;
+    private int publishYear;
     private int quantity;
-    private List <String[]> queue;
+    private List<String[]> queue;
 
     public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear, int quantity) {
         this.bookName = bookName;
@@ -26,24 +26,6 @@ public class Book {
         this.publishYear = publishYear;
         this.quantity = quantity;
     }
-
-    public boolean isAvailable() {
-        return this.quantity > 0;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public String getTitle() {
-
-        return bookName;
-    }
-    //Test
 
     public static List<Book> getBooks() {
         String readInBookName, readInAuthor, readInISBN, readInPublisher, readInGenre, readInYear, readInQuantity;
@@ -56,36 +38,34 @@ public class Book {
             // Checks the line is not empty
             String line;
             while ((line = br.readLine()) != null) {
-                    //Stores Personal-number
-                    readInBookName = line;
-                    readInAuthor = br.readLine();
-                    readInISBN = br.readLine();
-                    readInPublisher = br.readLine();
-                    readInGenre = br.readLine();
-                    readInYear = br.readLine();
-                    readInQuantity = br.readLine();
+                //Stores Personal-number
+                readInBookName = line;
+                readInAuthor = br.readLine();
+                readInISBN = br.readLine();
+                readInPublisher = br.readLine();
+                readInGenre = br.readLine();
+                readInYear = br.readLine();
+                readInQuantity = br.readLine();
 
 
-                    readInYearInt = Integer.parseInt(readInYear);
-                    readInQuantityInt = Integer.parseInt(readInQuantity);
-                    Book book = new Book(readInBookName,readInAuthor,readInISBN,readInPublisher,readInGenre,readInYearInt, readInQuantityInt);
-                    bookList.add(book);
+                readInYearInt = Integer.parseInt(readInYear);
+                readInQuantityInt = Integer.parseInt(readInQuantity);
+                Book book = new Book(readInBookName, readInAuthor, readInISBN, readInPublisher, readInGenre, readInYearInt, readInQuantityInt);
+                bookList.add(book);
             }
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "File not found");
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Something went wrong\n Please Try again");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong\n Please Try again");
         }
         return bookList;
     }
 
     public static String printInfo(Book book) {
 
-        return book.bookName +"\n"+ book.author + "\n"+ book.ISBN + "\n"+ book.publisher
-                + "\n"+ book.genre + "\n"+ book.publishYear+ "\n"+ book.quantity +"\n";
+        return book.bookName + "\n" + book.author + "\n" + book.ISBN + "\n" + book.publisher
+                + "\n" + book.genre + "\n" + book.publishYear + "\n" + book.quantity + "\n";
     }
-
 
     public static void searchBooks(List<Book> bookList, String searchedString) {
         List<Book> searchResults = new ArrayList<>();
@@ -101,12 +81,11 @@ public class Book {
                     book.quantity == Integer.parseInt(searchedString)) {
                 searchResults.add(book);
             }
-            if (book.quantity == 0){
+            if (book.quantity == 0) {
                 Scanner scan = new Scanner(System.in);
                 System.out.println("The book is not available, Would you like to stand in queue?");
             }
         }
-
 
 
         if (searchResults.isEmpty()) {
@@ -119,7 +98,25 @@ public class Book {
         }
     }
 
-    public void BookQueue (List<String> bookqueue){
+    public boolean isAvailable() {
+        return this.quantity > 0;
+    }
+    //Test
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getTitle() {
+
+        return bookName;
+    }
+
+    public void BookQueue(List<String> bookqueue) {
 
     }
 
