@@ -5,10 +5,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        LibrarySystem librarySystem = new LibrarySystem();
+        LibrarySystem librarySystem = LibrarySystem.getInstance();
 
-
-        LibraryInfo libraryInfo = new LibraryInfo(librarySystem);
+        LibraryInfo libraryInfo = LibraryInfo.getInstance(librarySystem);
 
 
     }

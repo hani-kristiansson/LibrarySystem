@@ -4,7 +4,20 @@ import java.util.Scanner;
 
 public class LibraryInfo {
 
-    LibraryInfo(LibrarySystem librarySystem){
+    private static LibraryInfo instance;
+    private LibrarySystem librarySystem;
+
+
+    public static synchronized LibraryInfo getInstance(LibrarySystem librarySystem) {
+        if (instance == null) {
+            instance = new LibraryInfo(librarySystem);
+        }
+        return instance;
+    }
+
+    private LibraryInfo(LibrarySystem librarySystem) {
+        this.librarySystem = LibrarySystem.getInstance();
+
         boolean loggedIn = false;
         boolean adminLoggedIn = false;
 

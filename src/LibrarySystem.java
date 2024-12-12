@@ -5,19 +5,26 @@ import java.util.*;
 public class LibrarySystem {
 
 
+    private static LibrarySystem instance;
     private List<Book> bookList;
     private List<Loan> loanList;
-    Scanner scan = new Scanner(System.in);
     private List<Member> memberList;
     private List<Admin> adminList;
+    Scanner scan = new Scanner(System.in);
 
-
-    public LibrarySystem() {
+    private LibrarySystem() {
         super();
         this.memberList = Member.getMembers();
         this.adminList = Admin.getAdmins();
         this.bookList = new ArrayList<>();
-        loanList = null;
+        this.loanList = new ArrayList<>();
+    }
+
+    public static synchronized LibrarySystem getInstance() {
+        if (instance == null) {
+            instance = new LibrarySystem();
+        }
+        return instance;
     }
 
 
