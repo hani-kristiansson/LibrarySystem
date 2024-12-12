@@ -37,7 +37,7 @@ public class LibraryInfo {
                 case 1:
                     System.out.println("Enter your username: ");
                     userNameLOGGEDIN = scanner.nextLine().trim();
-                    loggedIn = librarySystem.login(userNameLOGGEDIN, false, 0);
+                    loggedIn = librarySystem.login(userNameLOGGEDIN.trim(), false, 0);
                     break;
                 case 2:  // Create User account
                     userNameLOGGEDIN = librarySystem.createUserAccount();
@@ -118,19 +118,14 @@ public class LibraryInfo {
                     if (favoriteISBN.isEmpty()) {
                         System.out.println("You must enter a valid ISBN.");
                     } else {
-                        boolean memberFound = false;
                         for (Member member : memberList) {
-                            System.out.println("Checking member: " + member.getMemberID());
-                            if (member.getUserName().equals(userNameLOGGEDIN)) {
-                                member.addFavoriteBookFromLog(favoriteISBN);//Puts books as favorites
-                                memberFound = true;
+                            if (member.getUserName().trim().equals(userNameLOGGEDIN.trim())) {
+                                member.addFavoriteBookFromLog(favoriteISBN, "favorites.txt");//Puts books as favorites
                                 break;
                             }
 
                         }
-                        if (!memberFound) {
-                            System.out.println("No logged in member found.");
-                        }
+
                     }
                     break;
                 case 6:
