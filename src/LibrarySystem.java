@@ -9,15 +9,16 @@ public class LibrarySystem {
     Scanner scan = new Scanner(System.in);
     private final List<Member> memberList;
     private final List<Admin> adminList;
+    //List<Book> bookList = new ArrayList<>();
+    //List<Loan> loanList = new ArrayList<>();
 
     private LibrarySystem() {
         super();
         this.memberList = Member.getMembers();
         this.adminList = Admin.getAdmins();
-        List<Book> bookList = new ArrayList<>();
-        List<Loan> loanList = new ArrayList<>();
     }
 
+    ////Singleton design mönster
     public static synchronized LibrarySystem getInstance() {
         if (instance == null) {
             instance = new LibrarySystem();
@@ -31,6 +32,11 @@ public class LibrarySystem {
             System.out.println("You have exceeded the number of attempts, try again later");
             return false;
         }
+//        if (checkUsernameAvailability(userName , isAdmin)) {  //TODO: username available error message
+//            System.out.println("Username not found");
+//            return false;
+//
+//        }
         String username = userName;
         int pincode;
         List<? extends Person> personlist = isAdmin ? adminList : memberList;
@@ -43,6 +49,9 @@ public class LibrarySystem {
                 if (person.getPassword() == pincode) {
                     System.out.println("Hello " + person.getName());
                     return true;
+                } else if (!person.getUserName().equalsIgnoreCase(username)) {
+                    System.out.println("Username not found");
+                return false;
                 } else {
                     System.out.println("Invalid pin code try again");
                     return login(userName, isAdmin, attempts +1);
@@ -146,11 +155,6 @@ public class LibrarySystem {
 
     public void updateUserFile(List<Member> memberListIn) {
 
-        System.out.println("members");
-        for (Member member : memberListIn) {
-            System.out.println(member);
-        }
-
         try (FileWriter fileWriter = new FileWriter("FileNameUser.txt", false)) { // 'false' overwrites the file
 
             for (Member member : memberListIn) {
@@ -167,7 +171,6 @@ public class LibrarySystem {
         Iterator<Member> iterator = memberListIn.iterator(); // Create an iterator for the list
         while (iterator.hasNext()) {
             Member member = iterator.next(); // Get the next member
-            System.out.println("Member: " + member.getUserName());
             if (member.getUserName().equalsIgnoreCase(userName)) {
                 iterator.remove(); // Safely remove the current element
                 System.out.println("User " + userName + " deleted successfully");

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Loan {
@@ -14,6 +15,7 @@ public class Loan {
     private LocalDate startDate;
     private LocalDate endDate;
     private String userName;
+
 
     public Loan(String ISBN, String userName) {
         this.ISBN = ISBN;

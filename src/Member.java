@@ -41,7 +41,7 @@ public class Member extends Person {
         System.out.println("Searching for ISBN: " + ISBN);
 
         for (Book book : bookList) {
-            System.out.println("Checking book: " + book.getTitle() + ", ISBN: " + book.getISBN());
+//            System.out.println("Checking book: " + book.getTitle() + ", ISBN: " + book.getISBN());
             if (book.getISBN().trim().equals(ISBN.trim())) {
                 if (!favoriteBooks.contains(book)) {
                     favoriteBooks.add(book);
