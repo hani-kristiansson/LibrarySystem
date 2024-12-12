@@ -7,17 +7,15 @@ public class LibrarySystem {
 
     private static LibrarySystem instance;
     Scanner scan = new Scanner(System.in);
-    private List<Book> bookList;
-    private List<Loan> loanList;
-    private List<Member> memberList;
-    private List<Admin> adminList;
+    private final List<Member> memberList;
+    private final List<Admin> adminList;
 
     private LibrarySystem() {
         super();
         this.memberList = Member.getMembers();
         this.adminList = Admin.getAdmins();
-        this.bookList = new ArrayList<>();
-        this.loanList = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
+        List<Loan> loanList = new ArrayList<>();
     }
 
     public static synchronized LibrarySystem getInstance() {
