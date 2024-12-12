@@ -120,7 +120,7 @@ public class LibraryInfo {
                     } else {
                         for (Member member : memberList) {
                             if (member.getUserName().trim().equals(userNameLOGGEDIN.trim())) {
-                                member.addFavoriteBookFromLog(favoriteISBN.trim());//Puts books as favorites
+                                member.addFavoriteBookFromLog(favoriteISBN, "favorites.txt");//Puts books as favorites
                                 break;
                             }
 

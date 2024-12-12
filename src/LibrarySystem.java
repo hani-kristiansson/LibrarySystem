@@ -16,6 +16,8 @@ public class LibrarySystem {
         super();
         this.memberList = Member.getMembers();
         this.adminList = Admin.getAdmins();
+        List<Book> bookList = Book.getBooks();
+        loadAllFavorites(this.memberList, "favorites.txt", bookList);
     }
 
     ////Singleton design mönster
@@ -156,6 +158,12 @@ public class LibrarySystem {
             System.out.println("File updated successfully");
         } catch (IOException e) {
             System.out.println("An error occurred while clearing the file: " + e.getMessage());
+        }
+    }
+
+    public void loadAllFavorites(List<Member> memberList, String filePath, List<Book> bookList) {
+        for (Member member : memberList) {
+            member.loadFavoritesFromFile(filePath, bookList);
         }
     }
 
