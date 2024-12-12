@@ -139,14 +139,6 @@ public class LibrarySystem {
         return false;
     }
 
-    public Member getMember(String userName) {
-        for (Member member : memberList) {
-            if (member.getUserName().equalsIgnoreCase(userName)) {
-                return member;
-            }
-        }
-        return null;
-    }
 
     public int getRandomBook() {
         Random random = new Random();
