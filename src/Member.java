@@ -40,15 +40,19 @@ public class Member extends Person {
 
         System.out.println("Searching for ISBN: " + ISBN);
 
+        for (Book favorite : favoriteBooks) {
+            if (favorite.getISBN().trim().equals(ISBN.trim())) {
+                System.out.println("This book: " + favorite.getTitle() + "is already in your favorites ");
+                return;
+
+            }
+        }
+
         for (Book book : bookList) {
 //            System.out.println("Checking book: " + book.getTitle() + ", ISBN: " + book.getISBN());
             if (book.getISBN().trim().equals(ISBN.trim())) {
-                if (!favoriteBooks.contains(book)) {
-                    favoriteBooks.add(book);
-                    System.out.println("Book added to favorites: " + book.getTitle());
-                } else {
-                    System.out.println("This book is already in your favorites.");
-                }
+                favoriteBooks.add(book);
+                System.out.println("Book added to favorites: " + book.getTitle());
                 bookFound = true;
                 break;
             }
