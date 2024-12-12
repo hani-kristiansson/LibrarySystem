@@ -32,16 +32,16 @@ public class LibrarySystem {
             return false;
         }
         String username = userName;
-        int pincode = 0;
+        int pincode;
         List<? extends Person> personlist = isAdmin ? adminList : memberList;
 
-        for (Member member : memberList) {
+        for (Person person : personlist) {
             username = username.trim();
-            if (member.getUserName().equalsIgnoreCase(username)) {
+            if (person.getUserName().equalsIgnoreCase(username)) {
                 System.out.println("Enter your pincode: ");
                 pincode = scan.nextInt();
-                if (member.getPassword() == pincode) {
-                    System.out.println("Hello " + member.getName());
+                if (person.getPassword() == pincode) {
+                    System.out.println("Hello " + person.getName());
                     return true;
                 } else {
                     System.out.println("Invalid pin code try again");
@@ -56,7 +56,6 @@ public class LibrarySystem {
         return false;
     }
 
-
     public String createUserAccount() {
 
         System.out.println("Enter your name: ");
@@ -69,8 +68,8 @@ public class LibrarySystem {
         System.out.println("User name: ");
         String userName = scan.nextLine();
 
-        checkMember(userName);
-        if (checkMember(userName)) {
+        checkUsernameAvailability(userName, false);
+        if (checkUsernameAvailability(userName, false)) {
             System.out.println("This username is occupied, please try another one");
             return createUserAccount();
         }
@@ -89,18 +88,6 @@ public class LibrarySystem {
         return userName;
     }
 
-    public boolean checkMember (String userName) {
-        for (Member member : memberList) {
-            if (member.getUserName().equalsIgnoreCase(userName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-
     public String createAdminAccount() {
         System.out.println("Enter your name: ");
         String name = scan.nextLine();
@@ -111,6 +98,12 @@ public class LibrarySystem {
 
         System.out.println("User name: ");
         String userName = scan.nextLine();
+
+        checkUsernameAvailability(userName, true);
+        if (checkUsernameAvailability(userName, true)) {
+            System.out.println("This username is occupied, please try another one");
+            return createAdminAccount();
+        }
 
         System.out.println("Create a pincode 4 digits:");
         int pincode = scan.nextInt();
@@ -125,6 +118,16 @@ public class LibrarySystem {
 
         System.out.println("Admin " + name + " Salutations!");
         return userName;
+    }
+
+    public boolean checkUsernameAvailability(String userName, boolean isAdmin) {
+        List<? extends Person> personList = isAdmin? adminList : memberList;
+        for (Person person : personList) {
+            if (person.getUserName().equalsIgnoreCase(userName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Member getMember(String userName) {
