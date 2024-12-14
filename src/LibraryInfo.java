@@ -22,24 +22,24 @@ public class LibraryInfo {
         Scanner scanner = new Scanner(System.in);
 
         while (!loggedIn && !adminLoggedIn) {
-            System.out.println("1. Login\n2. Sign up\n3.Admin Login\n");
+            System.out.println("1. Login\n2. Sign up\n3. Admin Login\n");
+
+            // TODO create a try-catch for nextInt.
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear buffer
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter username: ");
-                    userNameLOGGEDIN = scanner.nextLine().trim();
+                    librarySystem.loginSystemUser();
                     loggedIn = true;
                     break;
                 case 2:
-                    System.out.println("Account created successfully! Please log in.");
+                    librarySystem.createUserOrAdmin();
                     break;
                 case 3:
-                    System.out.println("Admin logged in");
+                    librarySystem.loginSystemAdmin();
                     adminLoggedIn = true;
                     running = false;
-
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -49,7 +49,7 @@ public class LibraryInfo {
         System.out.println("Welcome to " + libraryName + "!");
 
         while (running) {
-            System.out.println("\n 1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
+            System.out.println("\n1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Exit");
             System.out.println(libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
 
             System.out.println("Enter your choice: ");
@@ -108,7 +108,6 @@ public class LibraryInfo {
             }
         }
         while (adminLoggedIn) {
-
             System.out.println("1.Check Loans\n2.Check Members\n3.Delete Member\n4.Create new Admin Account\n5.Exit");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear buffer

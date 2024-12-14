@@ -1,2 +1,8 @@
 fatima,1999,falafel,4444
 julia,2000,Juul,1234
+,2018,,1234
+Antonella,2018,anto18,1111
+Antonella,2018,anto18,1111
+sebbe1,1234,sebbe1,1992pedro24,1234,pedro24,2024
+sebas92,1234,sebas92,1992
+pedro24,1234,pedro24,2024
