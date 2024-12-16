@@ -16,7 +16,6 @@ public class Loan {
     private LocalDate endDate;
     private String userName;
 
-
     public Loan(String ISBN, String userName) {
         this.ISBN = ISBN;
         this.userName = userName;
@@ -41,8 +40,6 @@ public class Loan {
                 return "The book with Loan ID '" + loanID + "' has been returned.";
             }
         }
-
-
         return "No loan found with ID '" + loanID + "'.";
     }
 
@@ -92,10 +89,8 @@ public class Loan {
                 startDate = LocalDate.now();
                 endDate = calculateDueDate(startDate);
                 return "Loan created successfully! Loan ID: " + this.loanID + ", Due Date: " + this.endDate;
-
             }
         }
-
         return "The book with ISBN " + ISBN + " is not available or does not exist.";
     }
 

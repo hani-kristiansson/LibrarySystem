@@ -11,9 +11,6 @@ public class Person {
         this.password = password;
     }
 
-    public Person() {
-    }
-
     public String getName() {
         return name;
     }
@@ -26,15 +23,7 @@ public class Person {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public int getPassword() {
         return password;
-    }
-
-    public void setPassword(int password) {
-        this.password = password;
     }
 }

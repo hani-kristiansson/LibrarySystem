@@ -4,13 +4,10 @@ import java.util.*;
 
 public class LibrarySystem {
 
-
     private static LibrarySystem instance;
     Scanner scan = new Scanner(System.in);
     private final List<Member> memberList;
     private final List<Admin> adminList;
-    //List<Book> bookList = new ArrayList<>();
-    //List<Loan> loanList = new ArrayList<>();
 
     private LibrarySystem() {
         super();
@@ -28,17 +25,12 @@ public class LibrarySystem {
         return instance;
     }
 
-
     public boolean login(String userName, boolean isAdmin, int attempts) {
         if (attempts >= 3) {
             System.out.println("You have exceeded the number of attempts, try again later");
             return false;
         }
-//        if (checkUsernameAvailability(userName , isAdmin)) {  //TODO: username available error message
-//            System.out.println("Username not found");
-//            return false;
-//
-//        }
+
         String username = userName;
         int pincode;
         List<? extends Person> personlist = isAdmin ? adminList : memberList;
@@ -57,11 +49,8 @@ public class LibrarySystem {
                 } else {
                     System.out.println("Invalid pin code try again");
                     return login(userName, isAdmin, attempts +1);
-
                 }
-
             }
-
         }
         System.out.println("Login failed, try again");
         return false;
@@ -141,7 +130,6 @@ public class LibrarySystem {
         return false;
     }
 
-
     public int getRandomBook() {
         Random random = new Random();
         return random.nextInt(50);
@@ -154,7 +142,6 @@ public class LibrarySystem {
             for (Member member : memberListIn) {
                 fileWriter.write(member.getName() + "," + member.getYearOfBirth() + "," + member.getUserName() + "," + member.getPassword() + "\n");
             }
-
             System.out.println("File updated successfully");
         } catch (IOException e) {
             System.out.println("An error occurred while clearing the file: " + e.getMessage());
@@ -178,4 +165,3 @@ public class LibrarySystem {
         }
     }
 }
-

@@ -7,7 +7,6 @@ public class LibraryInfo {
     private static LibraryInfo instance;
     private LibrarySystem librarySystem;
 
-
     private LibraryInfo(LibrarySystem librarySystem) {
         this.librarySystem = LibrarySystem.getInstance();
 
@@ -19,7 +18,8 @@ public class LibraryInfo {
         String libraryTelephoneNumber = "08-466 60 00";
         String LibraryOpenHours = "Mon-Fri 08-17";
         String userNameLOGGEDIN = "Guest";
-        String menuOptions = "\n1. Search/Check quantity \n2. Borrow a book \n3. Return a book \n4. Book Tips \n5. Mark a favorite book\n6 Queue for a book \n7. Exit";
+        String menuOptions = "\n1. Search/Check quantity \n2. Borrow a book \n3. Return a book " +
+                "\n4. Book Tips \n5. Mark a favorite book\n6 Queue for a book \n7. Exit";
         String menuOptionsLogin = "\n1. Login\n2. Sign up\n3. Admin Login\n4. Create Admin Account";
         List<Book> bookList = Book.getBooks();
         List<Loan> loanList = new ArrayList<>();
@@ -63,9 +63,7 @@ public class LibraryInfo {
 
         while (loggedIn) {
             System.out.println(menuOptions);
-
             System.out.println(libraryName + " " + libraryLocation + " " + libraryTelephoneNumber + " " + LibraryOpenHours);
-
             System.out.println("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear buffer
@@ -123,9 +121,7 @@ public class LibraryInfo {
                                 member.addFavoriteBookFromLog(favoriteISBN, "favorites.txt");//Puts books as favorites
                                 break;
                             }
-
                         }
-
                     }
                     break;
                 case 6:
@@ -162,44 +158,38 @@ public class LibraryInfo {
             }
         }
 
+        while (adminLoggedIn) {
 
-            while (adminLoggedIn) {
-
-                System.out.println("1.Check Loans\n2.Check Members\n3.Delete Member\n4.Create new Admin Account\n5.Exit");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Clear buffer
-                switch (choice) {
-                    case 1:
-
-                        System.out.println("Loan List:\n" + loanList.toString());
-
-                        //Check Loans
-                        break;
-                    case 2:
-                        //Check members
-                        System.out.println("Members List:\n" + memberList.toString());
-                        break;
-                    case 3:
-                        //Delete Member
-                        System.out.println("Whats the username: ");
-                        String temp = scanner.nextLine();
-                        librarySystem.deleteUser(temp, memberList);
-                        librarySystem.updateUserFile(memberList);
-                        break;
-                    case 4:
-                        librarySystem.createAdminAccount();
-                        break;
-                    case 5:
-                        //Exit
-                        adminLoggedIn = false;
-                        break;
-                }
-
+            System.out.println("1.Check Loans\n2.Check Members\n3.Delete Member\n4.Create new Admin Account\n5.Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Clear buffer
+            switch (choice) {
+                case 1:
+                    System.out.println("Loan List:\n" + loanList.toString());
+                    //Check Loans
+                    break;
+                case 2:
+                    //Check members
+                    System.out.println("Members List:\n" + memberList.toString());
+                    break;
+                case 3:
+                    //Delete Member
+                    System.out.println("Whats the username: ");
+                    String temp = scanner.nextLine();
+                    librarySystem.deleteUser(temp, memberList);
+                    librarySystem.updateUserFile(memberList);
+                    break;
+                case 4:
+                    librarySystem.createAdminAccount();
+                    break;
+                case 5:
+                    //Exit
+                    adminLoggedIn = false;
+                    break;
             }
-            System.out.println("Program terminated.");
         }
-
-
+        System.out.println("Program terminated.");
+    }
 
     public static synchronized LibraryInfo getInstance(LibrarySystem librarySystem) {
         if (instance == null) {

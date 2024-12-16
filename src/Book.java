@@ -87,7 +87,6 @@ public class Book {
             }
         }
 
-
         if (searchResults.isEmpty()) {
             System.out.println("No books found matching \"" + searchedString + "\".");
         } else {
@@ -134,6 +133,5 @@ public class Book {
     public String getISBN() {
         return ISBN;
     }
-
 
 }
