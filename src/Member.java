@@ -59,7 +59,9 @@ public class Member extends Person {
                     readInPasswordInt = Integer.parseInt(readInPassword);
 
                     // Create a Member object and add it to the list
-                    Member member = new Member(readInName, readInYearOfBirthInt, readInUserName, readInPasswordInt);
+                    Member memberOriginal = new Member(readInName, readInYearOfBirthInt, readInUserName, readInPasswordInt);
+                    // Sebbe made this member list to test something.
+                    Member member = new Member(readInUserName, readInPasswordInt, readInName, readInYearOfBirthInt);
                     memberList.add(member);
                 } else {
                     System.out.println("Invalid line format: " + line);

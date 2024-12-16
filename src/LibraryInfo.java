@@ -117,8 +117,12 @@ public class LibraryInfo {
                 break;
                 case 2:
                     //Check members
-                    System.out.println("Members List:\n" + memberList.toString());
-                break;
+                    //System.out.println("Members List:\n" + memberList);
+                    int count = 1;
+                    for(Member miembros : memberList){
+                        System.out.println(count + " Member: " + miembros);
+                        count++;
+                    }continue;
                 case 3:
                     //Delete Member
                     System.out.println("Whats the username: ");
