@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,38 +28,42 @@ public class LibraryInfo {
         List<Member> memberList = Member.getMembers();
 
         Scanner scanner = new Scanner(System.in);
+        try {
+            while (!loggedIn && !adminLoggedIn) {
+                System.out.println(menuOptionsLogin);
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Clear buffer
 
-        while (!loggedIn && !adminLoggedIn) {
-            System.out.println(menuOptionsLogin);
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Clear buffer
+                switch (choice) {
+                    case 1:
+                        System.out.println("Enter your username: ");
+                        userNameLOGGEDIN = scanner.nextLine().trim();
+                        loggedIn = librarySystem.login(userNameLOGGEDIN.trim(), false, 0);
+                        break;
+                    case 2:  // Create User account
+                        userNameLOGGEDIN = librarySystem.createUserAccount();
+                        System.out.println("Account created successfully! You are now logged in.");
+                        loggedIn = true;
+                        break;
+                    case 3:  // Login Admin
+                        System.out.println("Enter your username Admin: ");
+                        userNameLOGGEDIN = scanner.nextLine().trim();
+                        adminLoggedIn = librarySystem.login(userNameLOGGEDIN, true, 0);
+                        break;
+                    case 4:  // Create Admin Account
+                        userNameLOGGEDIN = librarySystem.createAdminAccount();
+                        System.out.println("Admin account created successfully! You are now logged in.");
+                        adminLoggedIn = true;
+                        break;
 
-            switch (choice) {
-                case 1:
-                    System.out.println("Enter your username: ");
-                    userNameLOGGEDIN = scanner.nextLine().trim();
-                    loggedIn = librarySystem.login(userNameLOGGEDIN.trim(), false, 0);
-                    break;
-                case 2:  // Create User account
-                    userNameLOGGEDIN = librarySystem.createUserAccount();
-                    System.out.println("Account created successfully! You are now logged in.");
-                    loggedIn = true;
-                    break;
-                case 3:  // Login Admin
-                    System.out.println("Enter your username Admin: ");
-                    userNameLOGGEDIN = scanner.nextLine().trim();
-                    adminLoggedIn = librarySystem.login(userNameLOGGEDIN, true, 0);
-                    break;
-                case 4:  // Create Admin Account
-                    userNameLOGGEDIN = librarySystem.createAdminAccount();
-                    System.out.println("Admin account created successfully! You are now logged in.");
-                    adminLoggedIn = true;
-                    break;
-
-                default:
-                    System.out.println("Invalid option. Please try again.");
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
             }
+        } catch (InputMismatchException e) {
+            System.out.println("Choose a number instead!");
         }
+
 
         System.out.println("Welcome to " + libraryName + "!");
 
