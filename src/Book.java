@@ -78,7 +78,7 @@ public class Book {
                     book.publisher.toLowerCase().contains(lowerSearchString) ||
                     book.genre.toLowerCase().contains(lowerSearchString) ||
                     String.valueOf(book.publishYear).contains(lowerSearchString) ||
-                    book.quantity == Integer.parseInt(searchedString)) {
+                    String.valueOf(book.quantity).contains(lowerSearchString)) {
                 searchResults.add(book);
             }
             if (book.quantity == 0) {
