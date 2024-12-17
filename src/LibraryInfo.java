@@ -53,6 +53,7 @@ public class LibraryInfo {
                     userNameLOGGEDIN = librarySystem.createAdminAccount();
                     System.out.println("Admin account created successfully! You are now logged in.");
                     adminLoggedIn = true;
+                    break;
 
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -170,7 +171,11 @@ public class LibraryInfo {
                     break;
                 case 2:
                     //Check members
-                    System.out.println("Members List:\n" + memberList.toString());
+                    //System.out.println("Members List:\n" + memberList.toString());
+                    System.out.println("Members List:\n");
+                    for(Member miembros : memberList){
+                        System.out.println(miembros.toString());
+                    }
                     break;
                 case 3:
                     //Delete Member

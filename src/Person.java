@@ -26,4 +26,10 @@ public class Person {
     public int getPassword() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return name +
+                " userName='" + userName + '\'';
+    }
 }
