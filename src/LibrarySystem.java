@@ -12,7 +12,6 @@ public class LibrarySystem {
         super();
         this.memberList = Member.getMembers();
         this.adminList = Admin.getAdmins();
-        loadAllFavorites(this.memberList, "favorites.txt");
     }
 
     ////Singleton design pattern
@@ -155,11 +154,6 @@ public class LibrarySystem {
         }
     }
 
-    public void loadAllFavorites(List<Member> memberList, String filePath) {
-        for (Member member : memberList) {
-            member.loadFavoritesFromFile(filePath);
-        }
-    }
 
     public void deleteUser(String userName, List<Member> memberListIn) {
         Iterator<Member> iterator = memberListIn.iterator(); // Create an iterator for the list
