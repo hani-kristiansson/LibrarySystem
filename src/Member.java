@@ -9,14 +9,11 @@ public class Member extends Person {
     private int numberOfLoans = 0;
     private List<Book> favoriteBooks = new ArrayList<>(); //List for favorite books.
 
-    public Member(String name, int yearOfBirth, String userName, int password) {
-        super(name, yearOfBirth, userName, password);
-        this.numberOfLoans = 0;
-        this.memberID = userName;
+    public Member(String name, int yearOfBirth, String userName, int pincode) {
+        super(name, yearOfBirth, userName, pincode);
     }
 
     public void addFavoriteBookFromLog(String ISBN, String filePath) {
-        List<Book> bookList = Book.getBooks(); //get books from file
         boolean bookFound = false;
 
         System.out.println("Searching for ISBN: " + ISBN);
@@ -34,7 +31,7 @@ public class Member extends Person {
             System.out.println("Error reading favorites file: " + e.getMessage());
         }
 
-        for (Book book : bookList) {
+        for (Book book : Book.getBookList()) {
             if (book.getISBN().trim().equals(ISBN.trim())) {
                 favoriteBooks.add(book);
                 try (FileWriter writer = new FileWriter(filePath, true)) {
@@ -54,14 +51,14 @@ public class Member extends Person {
 
     }
 
-    public void loadFavoritesFromFile(String filePath, List<Book> bookList) {
+    public void loadFavoritesFromFile(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 2 && parts[0].equals(this.getUserName())) {
                     String isbn = parts[1].trim();
-                    for (Book book : bookList) {
+                    for (Book book : Book.getBookList()) {
                         if (book.getISBN().equals(isbn)) {
                             if (!favoriteBooks.contains(book)) {
                                 favoriteBooks.add(book);

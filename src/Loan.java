@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Loan {
@@ -79,10 +78,10 @@ public class Loan {
         return localDate.plusDays(30);
     }
 
-    public String loanCreator(String userName, String ISBN, List<Book> bookList) {
+    public String loanCreator(String userName, String ISBN) {
         Loan loan = new Loan(ISBN, userName);
 
-        for (Book book : bookList) {
+        for (Book book : Book.getBookList()) {
             if (book.getISBN().trim().equals(ISBN.trim()) && book.isAvailable()) {
                 book.setQuantity(book.getQuantity() - 1);
                 loanID = ISBN + userName + LocalDate.now();

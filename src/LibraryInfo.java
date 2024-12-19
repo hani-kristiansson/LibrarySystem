@@ -19,9 +19,8 @@ public class LibraryInfo {
         String LibraryOpenHours = "Mon-Fri 08-17";
         String userNameLOGGEDIN = "Guest";
         String menuOptions = "\n1. Search/Check quantity \n2. Borrow a book \n3. Return a book " +
-                "\n4. Book Tips \n5. Mark a favorite book\n6 Queue for a book \n7. Exit";
+                "\n4. Book Tips \n5. Mark a favorite book\n6 Queue for a book\n7.Report to Admin \n8. See Messages\n9.Exit";
         String menuOptionsLogin = "\n1. Login\n2. Sign up\n3. Admin Login\n4. Create Admin Account";
-        List<Book> bookList = Book.getBooks();
         List<Loan> loanList = new ArrayList<>();
         Loan.readLoanFromFile(loanList);
         List<Member> memberList = Member.getMembers();
@@ -73,7 +72,7 @@ public class LibraryInfo {
                     System.out.println("Enter search term: ");
                     String ISBNInput = scanner.nextLine().trim();
                     if (!ISBNInput.isEmpty()) {
-                        Book.searchBooks(bookList, ISBNInput);
+                        Book.searchBooks(Book.getBookList(), ISBNInput);
                     } else {
                         System.out.println("Invalid input. Please enter a valid search term.");
                     }
@@ -86,7 +85,7 @@ public class LibraryInfo {
                         System.out.println("You must choose a valid book.");
                     } else {
                         Loan loan = new Loan(ISBNInput, userNameLOGGEDIN);
-                        String result = loan.loanCreator(userNameLOGGEDIN, ISBNInput, bookList);
+                        String result = loan.loanCreator(userNameLOGGEDIN, ISBNInput);
                         if (result.startsWith("Loan created successfully!")) {
                             loanList.add(loan);
                             Loan.saveLoansToFile(loanList);
@@ -108,7 +107,7 @@ public class LibraryInfo {
                     break;
 
                 case 4:
-                    System.out.println(Book.printInfo(bookList.get(librarySystem.getRandomBook())));
+                    System.out.println(Book.printInfo(Book.getBookList().get(librarySystem.getRandomBook())));
                     break;
                 case 5:
                     System.out.println("Enter the ISBN of the book you want to make your favorite:");
@@ -132,7 +131,7 @@ public class LibraryInfo {
                         System.out.println("You must enter a valid ISBN.");
                     } else {
                         boolean bookFound = false;
-                        for (Book book : bookList) {
+                        for (Book book : Book.getBookList()) {
                             if (book.getISBN().trim().equals(queueISBN.trim())) {
                                 if (!book.isAvailable()) {
                                     book.BookQueue(userNameLOGGEDIN);
@@ -148,8 +147,16 @@ public class LibraryInfo {
                         }
                     }
                     break;
+                case 7: // Send Report to Admin
+                    Reports.sendReportToAdmin(userNameLOGGEDIN);
+                    break;
+                    case 8:// Check Messages
 
-                case 7:
+                        Reports.userCheckResponses(userNameLOGGEDIN);
+
+                        break;
+
+                case 9:
                     System.out.println("Thanks for your visit. Please come again.");
                     loggedIn = false;
                     break;
@@ -160,7 +167,7 @@ public class LibraryInfo {
 
         while (adminLoggedIn) {
 
-            System.out.println("1.Check Loans\n2.Check Members\n3.Delete Member\n4.Create new Admin Account\n5.Exit");
+            System.out.println("1.Check Loans\n2.Check Members\n3.Delete Member\n4.Create new Admin Account\n5.Add New Book\n6.Check Messages\n7.Exit");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear buffer
             switch (choice) {
@@ -182,13 +189,20 @@ public class LibraryInfo {
                 case 4:
                     librarySystem.createAdminAccount();
                     break;
-                case 5:
-                    //Exit
-                    adminLoggedIn = false;
+
+                case 5://Add new Book
+                    Book.addNewBook();
+                case 6:
+                    //Check Messages
+                    Reports.readReports();
+
                     break;
+                    case 7: // Exit
+                        adminLoggedIn = false;
+                        break;
             }
         }
-        System.out.println("Program terminated.");
+        System.out.println("Program Closed.");
     }
 
     public static synchronized LibraryInfo getInstance(LibrarySystem librarySystem) {

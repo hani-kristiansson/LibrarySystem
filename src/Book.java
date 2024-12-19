@@ -1,30 +1,36 @@
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Book {
 
-    private String bookName;
-    private String author;
-    private String ISBN;
-    private String publisher;
-    private String genre;
-    private int publishYear;
-    private int quantity;
+    private static String bookName;
+    private static String author;
+    private static String ISBN;
+    private static String publisher;
+    private static String genre;
+    private static int publishYear;
+    private static int quantity;
     private List <String> queue = new ArrayList<>();
+    //Singleton example
+    private static final List<Book> bookList = Book.getBooks();
+
+
+    // Singleton method to retrieve the single book list
+    public static List<Book> getBookList() {
+        return bookList;
+    }
 
     public Book(String bookName, String author, String ISBN, String publisher, String genre, int publishYear, int quantity) {
-        this.bookName = bookName;
-        this.author = author;
-        this.ISBN = ISBN;
-        this.publisher = publisher;
-        this.genre = genre;
-        this.publishYear = publishYear;
-        this.quantity = quantity;
+        Book.bookName = bookName;
+        Book.author = author;
+        Book.ISBN = ISBN;
+        Book.publisher = publisher;
+        Book.genre = genre;
+        Book.publishYear = publishYear;
+        Book.quantity = quantity;
     }
 
     public static List<Book> getBooks() {
@@ -63,8 +69,8 @@ public class Book {
 
     public static String printInfo(Book book) {
 
-        return book.bookName + "\n" + book.author + "\n" + book.ISBN + "\n" + book.publisher
-                + "\n" + book.genre + "\n" + book.publishYear + "\n" + book.quantity + "\n";
+        return bookName + "\n" + author + "\n" + ISBN + "\n" + publisher
+                + "\n" + genre + "\n" + publishYear + "\n" + quantity + "\n";
     }
 
     public static void searchBooks(List<Book> bookList, String searchedString) {
@@ -72,16 +78,16 @@ public class Book {
         String lowerSearchString = searchedString.toLowerCase();
 
         for (Book book : bookList) {
-            if (book.bookName.toLowerCase().contains(lowerSearchString) ||
-                    book.author.toLowerCase().contains(lowerSearchString) ||
-                    book.ISBN.toLowerCase().contains(lowerSearchString) ||
-                    book.publisher.toLowerCase().contains(lowerSearchString) ||
-                    book.genre.toLowerCase().contains(lowerSearchString) ||
-                    String.valueOf(book.publishYear).contains(lowerSearchString) ||
-                    book.quantity == Integer.parseInt(searchedString)) {
+            if (bookName.toLowerCase().contains(lowerSearchString) ||
+                    author.toLowerCase().contains(lowerSearchString) ||
+                    ISBN.toLowerCase().contains(lowerSearchString) ||
+                    publisher.toLowerCase().contains(lowerSearchString) ||
+                    genre.toLowerCase().contains(lowerSearchString) ||
+                    String.valueOf(publishYear).contains(lowerSearchString) ||
+                    quantity == Integer.parseInt(searchedString)) {
                 searchResults.add(book);
             }
-            if (book.quantity == 0) {
+            if (quantity == 0) {
                 Scanner scan = new Scanner(System.in);
                 System.out.println("The book is not available, Would you like to stand in queue?");
             }
@@ -98,7 +104,7 @@ public class Book {
     }
 
     public boolean isAvailable() {
-        return this.quantity > 0;
+        return quantity > 0;
     }
     //Test
 
@@ -107,7 +113,7 @@ public class Book {
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        Book.quantity = quantity;
     }
 
     public String getTitle() {
@@ -128,10 +134,40 @@ public class Book {
     public List<String> getQueue() {
         return queue;
     }
-
-
     public String getISBN() {
         return ISBN;
     }
 
+
+    //VG
+    public static void addNewBook(){
+        Scanner scan = new Scanner(System.in);
+        scan.nextLine();
+        System.out.println("Please enter Book Title: ");
+        bookName = scan.nextLine();
+        System.out.println("Please enter Book Author: ");
+        author = scan.nextLine();
+        System.out.println("Please enter Book ISBN: ");
+        ISBN = scan.nextLine();
+        System.out.println("Please enter Book Publisher : ");
+        publisher = scan.nextLine();
+        System.out.println("Please enter Book Genre: ");
+        genre = scan.nextLine();
+        System.out.println("Please enter Book Year: ");
+        publishYear = scan.nextInt();
+        System.out.println("Please enter Book Quantity: ");
+        quantity = scan.nextInt();
+
+        Book book = new Book(bookName,author,ISBN,publisher,genre,publishYear,quantity);
+
+        //Reads to file
+        try(FileWriter fileWriter = new FileWriter("BookLog",true)){
+            fileWriter.write(printInfo(book));
+        }catch (IOException e){
+            System.out.println("Error reading file");
+            e.printStackTrace();
+        }
+        System.out.println(bookName+" Added Successfully");
+    }
 }
+
