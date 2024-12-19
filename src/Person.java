@@ -2,13 +2,13 @@ public class Person {
     private String name;
     private int yearOfBirth;
     private String userName;
-    private int password;
+    private int pincode;
 
-    public Person(String name, int yearOfBirth, String userName, int password) {
+    public Person(String name, int yearOfBirth, String userName, int pincode) {
         this.name = name;
         this.yearOfBirth = yearOfBirth;
         this.userName = userName;
-        this.password = password;
+        this.pincode = pincode;
     }
 
     public String getName() {
@@ -23,7 +23,7 @@ public class Person {
         return userName;
     }
 
-    public int getPassword() {
-        return password;
+    public int getPincode() {
+        return pincode;
     }
 }
